@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
+import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/utils";
 
 const MAX_POSTS = 10;
@@ -13,6 +14,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 	<section>
 		<h1 class="title mb-6">在这里证明吾乃最弱之理由!</h1>
 		<p class="mb-4">一个简单的博客, 使用 vercel + astro 搭建, 在这里纪录一些二进制安全的学习笔记</p>
+		<SocialList />
 	</section>
 
 	<!-- posts list -->
