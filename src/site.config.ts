@@ -1,7 +1,7 @@
 const siteMeta = {
-	author: "Chris Williams",
-	title: "Astro Theme Cactus",
-	description: "An opinionated starter theme for Astro",
+	author: "Node Sans",
+	title: "Node Sans Blog",
+	description: "Node Sans's simple blog",
 	lang: "en-GB",
 	ogLocale: "en_GB",
 	githubUrl: "https://github.com/chrismwilliams/astro-theme-cactus",
