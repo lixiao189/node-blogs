@@ -7,7 +7,7 @@ import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://www.astro-theme-cactus.netlify.app/",
+	site: "https://blog.node189.top/",
 	markdown: {
 		shikiConfig: {
 			theme: "dracula",
