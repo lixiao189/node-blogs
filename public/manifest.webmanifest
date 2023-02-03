@@ -1,7 +1,7 @@
 {
-	"name": "Astro Theme Cactus Demo",
-	"short_name": "Astro_Cactus",
-	"description": "Starter blog site for Astro",
+	"name": "Node Sans's Blog",
+	"short_name": "node189-blog",
+	"description": "Node Sans's blog on vercel",
 	"icons": [
 		{
 			"src": "/192x192.png",

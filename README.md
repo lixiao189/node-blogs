@@ -2,35 +2,10 @@
   <img alt="Astro Theme Cactus logo" src="./gh-assets/astro-cactus-logo.png" width="70" />
 </div>
 <h1 align="center">
-  🚀 Astro Theme Cactus 🌵
+  🚀 Node Blog 🌵
 </h1>
 
-Astro Theme Cactus is a simple opinionated starter built with the Astro framework. Use it to create an easy-to-use blog or website.
-
-## Key Features
-
-- Astro Fast 🚀
-- TailwindCSS Utility classes
-- Accessible, semantic HTML markup
-- Responsive & SEO-friendly
-- Dark / Light mode, using Tailwind and CSS variables
-- [Astro Image Integration](https://docs.astro.build/en/guides/integrations-guide/image/) for optimised images
-- MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
-- [Satori](https://github.com/vercel/satori) for creating open graph png images.
-- Pagination
-- [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
-- Shiki code syntax styling
-- Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
-
-## Demo 💻
-
-Check out the [Demo](https://astro-theme-cactus.netlify.app/), hosted on Netlify
-
-## Quick start
-
-[Create a new repo](https://github.com/chrismwilliams/astro-theme-cactus/generate) from this template.
-
-[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/chrismwilliams/astro-theme-cactus) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fchrismwilliams%2Fastro-theme-cactus&project-name=astro-theme-cactus)
+Fork from: [https://github.com/chrismwilliams/astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus)
 
 ## Commands
 
@@ -109,10 +84,6 @@ import { GoogleAnalytics } from 'astro-google-analytics';
 [Astro docs](https://docs.astro.build/en/guides/deploy/) has a great section and breakdown of how to deploy your own Astro site on various platforms and their idiosyncrasies.
 
 By default the site will be built (see Commands section above) to a `/dist` directory.
-
-## Acknowledgment
-
-This theme is inspired by [Hexo Theme Cactus](https://github.com/probberechts/hexo-theme-cactus)
 
 ## License
 
