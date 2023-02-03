@@ -1,7 +1,7 @@
 ---
 title: "Hello World!"
-publishDate: "13 May 2022"
-description: "Hello world!!! This is an example blog post showcasing some of the cool stuff Astro Cactus theme can do."
+publishDate: "3 Feb 2022"
+description: "Hello world! My first blog!"
 tags: ["misc"]
 ---
 
