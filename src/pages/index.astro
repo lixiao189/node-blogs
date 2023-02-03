@@ -16,6 +16,8 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<p class="mb-4">一个简单的博客, 使用 vercel + astro 搭建, 在这里纪录一些二进制安全的学习笔记</p>
 		<SocialList />
 	</section>
+
+	<!-- posts list -->
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
@@ -26,75 +28,6 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					</li>
 				))
 			}
-		</ul>
-	</section>
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Technologies</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			<li>
-				<a
-					href="https://astro.build"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Astro
-				</a>:
-				<p class="inline-block sm:mt-2">Build fast websites, faster.</p>
-			</li>
-			<li>
-				<a
-					href="https://docs.astro.build/en/guides/integrations-guide/image/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>@astro/image
-				</a>:
-				<p class="inline-block sm:mt-2">
-					An Astro integration for optimising images in Astro projects.
-				</p>
-			</li>
-			<li>
-				<a
-					href="https://tailwindcss.com"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Tailwind CSS
-				</a>:
-				<p class="inline-block sm:mt-2">
-					Rapidly build modern websites without ever leaving your HTML.
-				</p>
-			</li>
-			<li>
-				<a
-					href="https://www.markdownguide.org/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Markdown
-				</a>:
-				<p class="inline-block sm:mt-2">Simple and easy-to-use markup language.</p>
-			</li>
-			<li>
-				<a
-					href="https://mdxjs.com/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>MDX
-				</a>:
-				<p class="inline-block sm:mt-2">Markdown for the component era.</p>
-			</li>
-			<li>
-				<a
-					href="https://github.com/vercel/satori"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Satori
-				</a>:
-				<p class="inline-block sm:mt-2">Generating png Open Graph images for blog posts</p>
-			</li>
 		</ul>
 	</section>
 </PageLayout>
