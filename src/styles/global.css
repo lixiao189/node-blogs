@@ -23,8 +23,7 @@
 	}
 
 	html {
-		/* @apply h-full scroll-smooth border-t-2 border-textColor; */
-		@apply border-hidden;
+		@apply h-full scroll-smooth border-t-2 border-textColor;
 	}
 
 	html body {
