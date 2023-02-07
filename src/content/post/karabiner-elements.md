@@ -2,7 +2,7 @@
 title: "软件推荐 Karabiner-Elements "
 publishDate: "7 Feb 2023"
 description: "使用 Karabiner-Elements 给你的 Mac 添加很多有用的快捷键"
-tags: ["CTF", "RE"]
+tags: ["Mac", "Config"]
 ---
 
 之前用 vim 的时候一直觉得，使用 ESC 退出太麻烦，前几天看这个大佬的配置视频
