@@ -19,6 +19,10 @@ tags: ["algorithm", "graph"]
 
 4. 输出：使用集合 $V_{new}$ 和 $E_{new}$ 来描述所得到的最小生成树。
 
+## 算法流程图
+
+在这个博客里能看到一个流程图，还挺清晰的: [博客传送门](https://www.cnblogs.com/biyeymyhjob/archive/2012/07/30/2615542.html)
+
 ## 算法代码
 
 **模板题传送门：** [https://www.luogu.com.cn/problem/P3366](https://www.luogu.com.cn/problem/P3366)
