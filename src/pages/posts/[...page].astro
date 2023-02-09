@@ -23,7 +23,7 @@ const { page, uniqueTags } = Astro.props;
 
 const meta = {
 	title: "Posts",
-	description: "A collection of posts by me for an Asto starter theme",
+	description: "A collection of posts by Node Sans",
 };
 
 const paginationProps = {
@@ -79,11 +79,11 @@ const paginationProps = {
 						</svg>
 						Tags
 					</h2>
-					<ul class="flex flex-wrap gap-2 text-bgColor">
+					<ul class="text-bgColor flex flex-wrap gap-2">
 						{uniqueTags.map((tag) => (
 							<li>
 								<a
-									class="flex items-center justify-center rounded-lg bg-accent p-1"
+									class="bg-accent flex items-center justify-center rounded-lg p-1"
 									href={`/tags/${tag}`}
 									aria-label={`View all posts with the tag: ${tag}`}
 								>

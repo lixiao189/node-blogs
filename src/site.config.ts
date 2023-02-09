@@ -4,7 +4,7 @@ const siteMeta = {
 	description: "Node Sans's simple blog",
 	lang: "en-GB",
 	ogLocale: "en_GB",
-	githubUrl: "https://github.com/chrismwilliams/astro-theme-cactus",
+	githubUrl: "https://github.com/lixiao189/node-blogs",
 	themeColorLight: "#fafafa",
 	themeColorDark: "#1d1f21",
 };

@@ -8,9 +8,14 @@ import { sortMDByDate } from "@/utils";
 const MAX_POSTS = 15;
 const allPosts = await getCollection("post");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+
+const meta = {
+	title: "Home",
+	description: "A simple blog about PWN and RE",
+};
 ---
 
-<PageLayout meta={{ title: "Home" }}>
+<PageLayout meta={meta}>
 	<div class="flex flex-col space-y-10 md:flex-row md:space-y-0">
 		<!-- posts list -->
 		<section aria-label="Blog post list" class="basis-2/3">
