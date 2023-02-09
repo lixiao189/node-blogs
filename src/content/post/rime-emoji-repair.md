@@ -1,7 +1,7 @@
 ---
 title: "Rime emoji 修复"
 publishDate: "4 Feb 2023"
-description: "最近突然 Rime 输入法突然更新，结果发现了 emoji 输入功能裂开了，在这里纪录解决过程" 
+description: "最近突然 Rime 输入法突然更新，结果发现了 emoji 输入功能裂开了，在这里纪录解决过程"
 tags: ["Mac", "Rime", "config"]
 ---
 
