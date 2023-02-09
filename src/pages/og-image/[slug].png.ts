@@ -15,8 +15,8 @@ const monoFontBold = await fetch(
 );
 
 const ogOptions: SatoriOptions = {
-	width: 1504,
-	height: 1264,
+	width: 1200,
+	height: 630,
 	// debug: true,
 	embedFont: true,
 	fonts: [
