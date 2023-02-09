@@ -5,32 +5,35 @@ import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/utils";
 
-const MAX_POSTS = 10;
+const MAX_POSTS = 15;
 const allPosts = await getCollection("post");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
 <PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-6">在这里证明吾乃最弱之理由!</h1>
-		<p class="mb-4">
-			一个简单的博客, 使用 vercel + astro 搭建, 在这里纪录一些二进制安全的学习笔记。<br />
-			<b>如果有任何问题可以通过邮件和我联系交流</b>
-		</p>
-		<SocialList />
-	</section>
+	<div class="flex flex-col space-y-10 md:flex-row md:space-y-0">
+		<!-- posts list -->
+		<section aria-label="Blog post list" class="basis-2/3">
+			<h2 class="title mb-4 text-xl">Recent posts</h2>
+			<ul class="space-y-4 sm:space-y-2">
+				{
+					allPostsByDate.map((p) => (
+						<li class="flex flex-col gap-x-2 sm:flex-row">
+							<PostPreview post={p} />
+						</li>
+					))
+				}
+			</ul>
+		</section>
 
-	<!-- posts list -->
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				allPostsByDate.map((p) => (
-					<li class="flex flex-col gap-x-2 sm:flex-row">
-						<PostPreview post={p} />
-					</li>
-				))
-			}
-		</ul>
-	</section>
+		<section class="basis-1/3">
+			<h2 class="title mb-4 text-xl">Aboug blog</h2>
+			<ul class="mb-4 space-y-4 sm:space-y-2">
+				<li>一个简单的博客, 使用 vercel + astro 搭建</li>
+				<li>在这里纪录一些二进制安全的学习笔记</li>
+				<li><b>如果有任何问题可以通过邮件和我联系交流</b></li>
+			</ul>
+			<SocialList />
+		</section>
+	</div>
 </PageLayout>

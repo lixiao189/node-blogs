@@ -15,7 +15,7 @@ const {
 } = post;
 const socialImage = ogImage ?? `/og-image/${slug}.png`;
 const articleDate = publishDate.toISOString();
-const { headings } = await post.render();
+// const { headings } = await post.render();
 ---
 
 <script>
@@ -38,30 +38,16 @@ const { headings } = await post.render();
 </script>
 
 <BaseLayout meta={{ title, description, articleDate, ogImage: socialImage }}>
-	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:items-start sm:gap-x-10">
-		<article class="break-words">
-			<div id="blog-hero"><BlogHero content={post} /></div>
-			<div
-				class="prose prose-sm prose-cactus mt-12 prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ml-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
-			>
-				<slot />
-			</div>
-		</article>
-		<aside class="hidden text-right sm:sticky sm:top-20 sm:block">
-			<h2 class="font-semibold">Table of Contents</h2>
-			<ul class="mt-4 space-y-2 text-xs">
-				{
-					headings.map(({ slug, text }) => (
-						<li class="line-clamp-2 hover:text-accent">
-							<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
-								<span>&#35;</span> {text}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</aside>
-	</div>
+	<!-- page content container -->
+	<article class="break-words">
+		<div id="blog-hero" class="md:text-center"><BlogHero content={post} /></div>
+		<!-- add max-w-none to maximization typography width -->
+		<div
+			class="prose prose-sm prose-cactus mt-12 max-w-none prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ml-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none prose-img:mx-auto prose-img:w-2/3"
+		>
+			<slot />
+		</div>
+	</article>
 	<button
 		id="to-top-btn"
 		class="z-90 fixed bottom-8 right-4 flex h-10 w-10 translate-y-28 items-center justify-center rounded-full border-2 border-transparent bg-zinc-200 text-3xl opacity-0 transition-all duration-300 hover:border-zinc-400 data-[show=true]:translate-y-0 data-[show=true]:opacity-100 dark:bg-zinc-700 sm:right-8 sm:h-12 sm:w-12"
