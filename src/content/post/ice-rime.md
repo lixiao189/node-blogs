@@ -1,5 +1,5 @@
 ---
-title: "Rime 输入法配置方案推荐"
+title: "Rime 输入法配置方案推荐：雾凇拼音"
 publishDate: "1 Mar 2023"
 description: "Rime 配置：雾凇拼音 | 长期维护的简体词库"
 tags: ["Mac", "Rime", "config"]
