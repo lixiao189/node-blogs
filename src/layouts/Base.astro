@@ -22,6 +22,9 @@ const {
 		<!-- SEO verify for google -->
 		<meta name="google-site-verification" content="G5bRZ1EgBHiixPKY1FGAuSd8d0uNGUeaAkvFsCZS-zY" />
 
+		<!-- Google analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-5W9PXP15TF"></script>
+
 		<!-- Katex -->
 		<link
 			rel="stylesheet"
@@ -61,6 +64,15 @@ const {
 
 			// initailse root class attribute
 			root.classList.toggle("dark", isDark);
+
+			// Google analytics
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+
+			gtag("config", "G-5W9PXP15TF");
 		</script>
 	</head>
 	<body>
