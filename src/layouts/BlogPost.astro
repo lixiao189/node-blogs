@@ -35,6 +35,29 @@ const articleDate = publishDate.toISOString();
 
 	const observer = new IntersectionObserver(callback);
 	observer.observe(targetHeader);
+
+	// inject copy button into code blocks
+	const copyButtonLabel = "Copy Code";
+	document.querySelectorAll("pre").forEach((block) => {
+		if (navigator.clipboard) {
+			let button = document.createElement("button");
+			block.appendChild(button);
+
+			button.innerText = copyButtonLabel;
+			button.className = "absolute top-2 left-3 border-dashed border rounded p-1 bg-transparent";
+			button.addEventListener("click", async () => {
+				let code = block.querySelector("code");
+				let text = code != null ? code.innerText : "";
+				await navigator.clipboard.writeText(text);
+
+				// copy response
+				button.innerText = "Code Copied";
+				setTimeout(() => {
+					button.innerText = copyButtonLabel;
+				}, 700);
+			});
+		}
+	});
 </script>
 
 <BaseLayout meta={{ title, description, articleDate, ogImage: socialImage }}>
@@ -43,7 +66,7 @@ const articleDate = publishDate.toISOString();
 		<div id="blog-hero" class="md:text-center"><BlogHero content={post} /></div>
 		<!-- add max-w-none to maximization typography width -->
 		<div
-			class="prose prose-sm prose-cactus mt-12 max-w-none prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ml-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none prose-img:mx-auto prose-img:md:w-4/5 prose-img:lg:w-2/3"
+			class="prose prose-sm prose-cactus mt-12 max-w-none prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ml-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-pre:relative prose-pre:pt-12 prose-th:before:content-none prose-img:mx-auto prose-img:md:w-4/5 prose-img:lg:w-2/3"
 		>
 			<slot />
 		</div>
