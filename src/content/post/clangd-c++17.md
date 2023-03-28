@@ -16,11 +16,13 @@ tags: ["clangd", "C++", "config"]
 - macOS: `~/Library/Preferences/clangd/config.yaml`
 - Linux and others: `$XDG_CONFIG_HOME/clangd/config.yaml, typically ~/.config/clangd/config.yaml.`
 
+如果有多个配置 If 条件的话，可以用 `---` 将他们隔开
+
 配置文件如下：
 
 ```yaml
 If:
   PathMatch: [.*\.cc, .*\.cpp, .*\.c++]
-  CompileFlags:
-    Add: [-std=c++17]
+CompileFlags:
+  Add: [-std=c++17]
 ```
