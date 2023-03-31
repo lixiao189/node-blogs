@@ -5,6 +5,26 @@ const meta = {
 	title: "About",
 	description: "Loving RE, loving pwn, loving anime.",
 };
+
+interface Link {
+	text: string;
+	link: string;
+}
+
+const links: Link[] = [
+	{
+		text: "小高的博客：一个脱离了低级趣味的二进制佬",
+		link: "https://www.cnblogs.com/gaoyucan",
+	},
+	{
+		text: "S1ain 的博客：安徽 Web 佬",
+		link: "https://gensokyo.cn/",
+	},
+	{
+		text: "Info 富哥的博客：暂时还不清楚以后他要做啥",
+		link: "https://blog.i1nfo.com/",
+	},
+];
 ---
 
 <PageLayout meta={meta}>
@@ -15,11 +35,15 @@ const meta = {
 			的，现在更喜欢了
 		</p>
 
-		<p>友情链接:</p>
+		<h2 class="title mb-4 text-xl">Links</h2>
 		<ul class="list-inside list-disc">
-			<li>XXX</li>
-			<li>YYY</li>
-			<li>ZZZ</li>
+			{
+				links.map((link) => (
+					<li>
+						<a href={link.link}>{link.text}</a>
+					</li>
+				))
+			}
 		</ul>
 	</div>
 </PageLayout>
