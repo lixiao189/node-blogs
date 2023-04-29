@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
-import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/utils";
 
 const MAX_POSTS = 15;
@@ -16,29 +15,17 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-	<div class="flex flex-col space-y-10 md:flex-row md:space-y-0">
-		<!-- posts list -->
-		<section aria-label="Blog post list" class="basis-2/3">
-			<h2 class="title mb-4 text-xl">Recent posts</h2>
-			<ul class="space-y-4 sm:space-y-2">
-				{
-					allPostsByDate.map((p) => (
-						<li class="flex flex-col gap-x-2 sm:flex-row">
-							<PostPreview post={p} />
-						</li>
-					))
-				}
-			</ul>
-		</section>
-
-		<section class="basis-1/3">
-			<h2 class="title mb-4 text-xl">Aboug blog</h2>
-			<ul class="mb-4 space-y-4 sm:space-y-2">
-				<li>一个简单的博客, 使用 vercel + astro 搭建</li>
-				<li>在这里纪录一些二进制安全的学习笔记</li>
-				<li><b>如果有任何问题可以通过邮件和我联系交流</b></li>
-			</ul>
-			<SocialList />
-		</section>
-	</div>
+	<!-- posts list -->
+	<section aria-label="Blog post list" class="basis-3/4">
+		<h2 class="title mb-4 text-xl">Recent posts</h2>
+		<ul class="space-y-4 sm:space-y-2">
+			{
+				allPostsByDate.map((p) => (
+					<li class="flex flex-col gap-x-2 sm:flex-row">
+						<PostPreview post={p} />
+					</li>
+				))
+			}
+		</ul>
+	</section>
 </PageLayout>
