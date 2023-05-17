@@ -22,7 +22,7 @@ tags: ["clangd", "C++", "config"]
 
 ```yaml
 If:
-  PathMatch: [.*\.cc, .*\.cpp, .*\.c++, .*\.hpp]
+  PathMatch: [.*\.cc, .*\.cpp, .*\.hpp]
 CompileFlags:
   Add: [-std=c++17]
 ```
