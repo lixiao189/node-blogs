@@ -1,5 +1,5 @@
 ---
-title: "2023 年安询杯 ezcpp 题解"
+title: "2023 年安询杯 ez_cpp 题解"
 publishDate: "10 Jun 2023"
 description: "比较恶心的花指令题目尤其是第一个加密算法"
 tags: ["RE", "CTF"]
