@@ -6,7 +6,7 @@ import siteMeta from "@/site-config";
 
 const parser = new MarkdownIt();
 
-export const get = async () => {
+export async function GET() {
 	const posts = await getCollection("post");
 
 	return rss({
@@ -22,4 +22,4 @@ export const get = async () => {
 			link: "/posts/" + post.slug,
 		})),
 	});
-};
+}
