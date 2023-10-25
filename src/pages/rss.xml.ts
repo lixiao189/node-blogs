@@ -3,10 +3,11 @@ import { getCollection } from "astro:content";
 import sanitizeHtml from "sanitize-html";
 import MarkdownIt from "markdown-it";
 import siteMeta from "@/site-config";
+import type { APIRoute } from "astro";
 
 const parser = new MarkdownIt();
 
-export async function GET() {
+export const GET: APIRoute = async () => {
 	const posts = await getCollection("post");
 
 	return rss({
@@ -22,4 +23,4 @@ export async function GET() {
 			link: "/posts/" + post.slug,
 		})),
 	});
-}
+};
