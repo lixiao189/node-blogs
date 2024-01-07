@@ -1,14 +1,14 @@
 {
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "explicit"
 	},
 	"stylelint.validate": ["css", "less", "postcss", "astro"],
 	"stylelint.snippet": ["css", "less", "postcss", "astro"],
 	"[markdown]": {
 		"editor.wordWrap": "on",
 		"editor.codeActionsOnSave": {
-			"source.fixAll.markdownlint": true
+			"source.fixAll.markdownlint": "explicit"
 		}
 	},
 	"prettier.documentSelectors": ["**/*.astro"],
