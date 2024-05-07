@@ -13,7 +13,6 @@ tags: ["iterm2", "config"]
 
 首先按照下图的设置调大这个缓存，这样就可以很明显的改善卡顿
 
-![qYpM0c](https://picture-1303128679.cos.ap-shanghai.myqcloud.com/uPic/qYpM0c.png)
+![I1JA0a](https://picture-1303128679.cos.ap-shanghai.myqcloud.com/uPic/I1JA0a.png)
 
-首先我在这个地方修改了一下我的 instant replay 缓存大小，这个空间主要是用来存放回放数据的，如果可以的话
-我其实是想关了这个功能，但是好像搜了一圈发现并没有能关掉这个功能的地方。
+首先我在这个地方修改了一下我的 instant replay 缓存大小，这个空间主要是用来存放回放数据的。
