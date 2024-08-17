@@ -29,17 +29,21 @@ echo -e "\e]52;c;$(base64 <<< php)\a"
 $SSH_TTY 环境变量是空的。所以这个地方我直接根据帮助文档，强行开启这个特性, 配置如下
 
 ```lua
-vim.g.clipboard = {
-      name = 'OSC 52',
-      copy = {
-        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-      },
-      paste = {
-        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-      },
+-- CLipboard over ssh
+local ssh_connection = vim.fn.getenv("SSH_CONNECTION")
+if ssh_connection ~= vim.NIL then
+    vim.g.clipboard = {
+        name = 'OSC 52',
+        copy = {
+            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+        },
+        paste = {
+            ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+        },
     }
+end
 ```
 
 ## iTerm2 配置
