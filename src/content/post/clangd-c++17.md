@@ -12,6 +12,7 @@ tags: ["clangd", "C++", "config"]
 后面翻了个文档以后在发现了添加 clangd 配置文件可以解决问题
 
 路径如下：
+
 - Windows: `%LocalAppData%\clangd\config.yaml, typically C:\Users\Bob\AppData\Local\clangd\config.yaml.`
 - macOS: `~/Library/Preferences/clangd/config.yaml`
 - Linux and others: `$XDG_CONFIG_HOME/clangd/config.yaml, typically ~/.config/clangd/config.yaml.`

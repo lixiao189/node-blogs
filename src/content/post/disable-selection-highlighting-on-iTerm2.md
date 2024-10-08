@@ -13,4 +13,3 @@ tags: ["Mac", "iTerm2", "config"]
 我们可以在设置的这个地方关闭这个恼人的新更新
 
 ![0ylA2s](https://picture-1303128679.cos.ap-shanghai.myqcloud.com/uPic/0ylA2s.png)
-

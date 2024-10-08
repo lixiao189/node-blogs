@@ -26,4 +26,3 @@ mkdir /home/node/.local/share/nvim/mason/packages/clangd
 ```
 
 ![欺骗 Neovim](https://picture-1303128679.cos.ap-shanghai.myqcloud.com/uPic/mBX8A9.png)
-
