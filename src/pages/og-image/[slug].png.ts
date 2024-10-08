@@ -73,10 +73,7 @@ export async function GET({ params: { slug } }: APIContext): Promise<Response> {
 	});
 	const svg = await satori(markup(title, postDate), ogOptions);
 	const png = new Resvg(svg).render().asPng();
-	return Response.json({
-		body: png,
-		encoding: "binary",
-	});
+  return new Response(png);
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
