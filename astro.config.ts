@@ -2,13 +2,13 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import prefetch from "@astrojs/prefetch";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://blog.node189.top/",
+  prefetch: true,
 	markdown: {
 		shikiConfig: {
 			theme: "dracula",
@@ -30,7 +30,6 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
-		prefetch(),
 	],
 	vite: {
 		optimizeDeps: {
