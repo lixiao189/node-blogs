@@ -1,5 +1,5 @@
 import type { APIContext, GetStaticPathsResult } from "astro";
-import { getCollection, getEntryBySlug } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import satori from "satori";
 import type { SatoriOptions } from "satori";
 import { html } from "satori-html";
@@ -65,18 +65,18 @@ const markup = (title: string, pubDate: string) =>
 		</div>
 	</div>`;
 
-export async function GET({ params: { slug } }: APIContext) {
-	const post = await getEntryBySlug("post", slug!);
+export async function GET({ params: { slug } }: APIContext): Promise<Response> {
+	const post = await getEntry("post", slug!);
 	const title = post?.data.title ?? siteConfig.title;
 	const postDate = getFormattedDate(post?.data.publishDate ?? Date.now(), {
 		weekday: "long",
 	});
 	const svg = await satori(markup(title, postDate), ogOptions);
 	const png = new Resvg(svg).render().asPng();
-	return {
+	return Response.json({
 		body: png,
 		encoding: "binary",
-	};
+	});
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
