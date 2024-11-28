@@ -20,7 +20,76 @@ tags: ["RE", "CTF"]
 
 然后我们还需要把密钥和密文数据模拟传入内存中, 最后还要传入加密函数相关的代码进入内存。
 
-代码如下：
+接下来以这个木马文件为例演示一下：
+
+我们需要用 unicorn 来调用解密函数，我们可以看到这个函数的地址为 `0x426090-0x4262BB`
+![](https://picture-1303128679.cos.ap-shanghai.myqcloud.com/uPic/CR45s9.png)
+同时还调用了一个 tea 解密函数，地址为 `0x426010-0x426085`
+我们使用如下代码来把几个函数加载进 unicorn 模拟器的内存
+
+```python
+# Create the simulator
+base = 0x400000
+uc = Uc(UC_ARCH_X86, UC_MODE_64)
+uc.mem_map(base, 1024 * 1024)
+
+
+def write_code(base, start, end):
+    func_start_offset = start - base
+    func_end_offset = end - base
+    func_code = code[func_start_offset : func_end_offset + 1]
+    uc.mem_write(start, func_code)
+
+
+write_code(base, 0x426090, 0x4262BB)  # tea decode caller
+write_code(base, 0x426010, 0x426085)  # tea decode
+```
+
+然后可以看到这个地方需要依次传入 v 密文, 密文长度，k 密钥, 结果，和结果长度
+
+我们可以在内存中对这几个变量开辟对应的内存来进行存储，然后把这些内存地址和变量值依次写入
+`rdi, rsi, rdx, rcx, r8` 寄存器, 用来模拟 x64 Linux 系统的函数调用传参过程
+
+```python
+data_start = 0x431F00
+
+# Write the data
+data_addr = data_start
+uc.mem_write(data_addr, bytes(data))
+
+# Write the key
+key_addr = data_addr + len(data)
+uc.mem_write(key_addr, bytes(key))
+
+# Calc the result buffer address
+res_addr = key_addr + len(key)
+
+# Calc the end number addr
+end_number_addr = res_addr + len(data) + 1
+end_number = 0x1000
+uc.mem_write(end_number_addr, end_number.to_bytes(4, "little"))
+
+# Pass the parameters
+uc.reg_write(UC_X86_REG_RDI, data_addr)
+uc.reg_write(UC_X86_REG_RSI, len(data))
+uc.reg_write(UC_X86_REG_RDX, key_addr)
+uc.reg_write(UC_X86_REG_RCX, res_addr)
+uc.reg_write(UC_X86_REG_R8, end_number_addr)
+```
+
+最后设置栈空间, 和 RIP 寄存器
+
+```python
+# Calc the stack address
+stack_len = 0x1000
+stack_addr = end_number_addr + 8 + stack_len
+
+uc.reg_write(UC_X86_REG_RIP, func_start)
+uc.reg_write(UC_X86_REG_RSP, stack_addr)
+uc.reg_write(UC_X86_REG_RBP, stack_addr)
+```
+
+最后所有代码如下：
 
 ```python
 from os import _exit
