@@ -67,8 +67,16 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <!-- SEO verify for google -->
 <meta name="google-site-verification" content="G5bRZ1EgBHiixPKY1FGAuSd8d0uNGUeaAkvFsCZS-zY" />
 
-<!-- Umami Cloud -->
-<script defer src="https://cloud.umami.is/script.js" data-website-id="aeb759e3-6f37-4c07-abf8-f2b47a85f230"></script>
+<!-- Tracker -->
+<script>
+	(function () {
+		(window as any).counterscale = {
+			q: [["set", "siteId", "node-blog"], ["trackPageview"]],
+		};
+	})();
+</script>
+<script id="counterscale-script" src="https://counterscale.node189.top/tracker.js" defer is:inline
+></script>
 
 <!-- Katex -->
 <link
