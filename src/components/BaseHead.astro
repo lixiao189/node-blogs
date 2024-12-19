@@ -67,16 +67,17 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <!-- SEO verify for google -->
 <meta name="google-site-verification" content="G5bRZ1EgBHiixPKY1FGAuSd8d0uNGUeaAkvFsCZS-zY" />
 
-<!-- Tracker -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5W9PXP15TF"></script>
 <script>
-	(function () {
-		(window as any).counterscale = {
-			q: [["set", "siteId", "node-blog"], ["trackPageview"]],
-		};
-	})();
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag("js", new Date());
+
+	gtag("config", "G-5W9PXP15TF");
 </script>
-<script id="counterscale-script" src="https://counterscale.node189.top/tracker.js" defer is:inline
-></script>
 
 <!-- Katex -->
 <link
