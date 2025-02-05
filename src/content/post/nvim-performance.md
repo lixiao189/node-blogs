@@ -1,5 +1,5 @@
 ---
-title: "提升 neovim 的性能问题"
+title: "提升 neovim 的性能"
 publishDate: "6 May 2024"
 description: "Neovim 在使用 Lsp 以后非常卡顿，后面经过排查是 log 日志的问题"
 tags: ["nvim", "config"]
