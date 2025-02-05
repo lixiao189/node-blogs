@@ -6,6 +6,7 @@ import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
 import siteConfig from "@/site-config";
 import { getFormattedDate } from "@/utils";
+import { parseAstAsync } from "rollup/parseAst";
 
 const monoFontReg = await fetch(
 	"https://api.fontsource.org/v1/fonts/roboto-mono/latin-400-normal.ttf",
@@ -65,8 +66,9 @@ const markup = (title: string, pubDate: string) =>
 		</div>
 	</div>`;
 
-export async function GET({ params: { id } }: APIContext): Promise<Response> {
-	const post = await getEntry("post", id!);
+
+export async function GET({ params: { slug } }: APIContext): Promise<Response> {
+	const post = await getEntry("post", slug!);
 	const title = post?.data.title ?? siteConfig.title;
 	const postDate = getFormattedDate(post?.data.publishDate ?? Date.now(), {
 		weekday: "long",
@@ -78,5 +80,5 @@ export async function GET({ params: { id } }: APIContext): Promise<Response> {
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 	const posts = await getCollection("post");
-	return posts.filter(({ data }) => !data.ogImage).map(({ id }) => ({ params: { id } }));
+	return posts.filter(({ data }) => !data.ogImage).map(({ id }) => ({ params: { slug: id } }));
 }
