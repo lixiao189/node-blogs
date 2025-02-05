@@ -18,9 +18,9 @@ export const GET: APIRoute = async () => {
 		items: posts.map((post) => ({
 			title: post.data.title,
 			description: post.data.description,
-			content: sanitizeHtml(parser.render(post.body)),
+			content: sanitizeHtml(parser.render(post.body === undefined ? "" : post.body)),
 			pubDate: post.data.publishDate,
-			link: "/posts/" + post.slug,
+			link: "/posts/" + post.id,
 		})),
 	});
 };

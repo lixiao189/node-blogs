@@ -9,7 +9,9 @@
 			"@/stores/*": ["src/stores/*"],
 			"@/data/*": ["src/data/*"],
 			"@/site-config": ["src/site.config.ts"]
-		}
+		},
+    "strictNullChecks": true,
+    "allowJs": true
 	},
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

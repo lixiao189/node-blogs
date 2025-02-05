@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SkipLink from "@/components/SkipLink";
 import siteConfig from "@/site-config";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 interface Props {
 	meta: SiteMeta;
@@ -67,5 +68,6 @@ const {
 			<slot />
 		</main>
 		<Footer />
+		<SpeedInsights />
 	</body>
 </html>
