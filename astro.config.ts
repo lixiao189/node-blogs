@@ -9,6 +9,7 @@ import rehypeKatex from "rehype-katex";
 export default defineConfig({
 	site: "https://blog.node189.top/",
   prefetch: true,
+  trailingSlash: "never",
 	markdown: {
 		shikiConfig: {
 			theme: "dracula",
