@@ -20,7 +20,7 @@ export const GET: APIRoute = async () => {
 			description: post.data.description,
 			content: sanitizeHtml(parser.render(post.body === undefined ? "" : post.body)),
 			pubDate: post.data.publishDate,
-			link: "/posts/" + post.id,
+			link: `/posts/${post.id}`,
 		})),
 	});
 };

@@ -66,9 +66,12 @@ const markup = (title: string, pubDate: string) =>
 		</div>
 	</div>`;
 
-
 export async function GET({ params: { slug } }: APIContext): Promise<Response> {
-	const post = await getEntry("post", slug!);
+	if (!slug) {
+		return new Response("Missing slug", { status: 400 });
+	}
+
+	const post = await getEntry("post", slug);
 	const title = post?.data.title ?? siteConfig.title;
 	const postDate = getFormattedDate(post?.data.publishDate ?? Date.now(), {
 		weekday: "long",

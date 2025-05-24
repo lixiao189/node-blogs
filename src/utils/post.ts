@@ -8,20 +8,22 @@ export function sortMDByDate(posts: CollectionEntry<"post">[] = []) {
 
 export function getUniqueTags(posts: CollectionEntry<"post">[] = []) {
 	const uniqueTags = new Set<string>();
-	posts.forEach((post) => {
+	for (const post of posts) {
 		post.data.tags.map((tag) => uniqueTags.add(tag));
-	});
+	}
 	return Array.from(uniqueTags);
 }
 
 export function getUniqueTagsWithCount(posts: CollectionEntry<"post">[] = []): {
 	[key: string]: number;
 } {
-	return posts.reduce((prev, post) => {
-		const runningTags: { [key: string]: number } = { ...prev };
-		post.data.tags.forEach((tag) => {
-			runningTags[tag] = (runningTags[tag] || 0) + 1;
-		});
-		return runningTags;
-	}, {});
+	return posts.reduce(
+		(prev, post) => {
+			for (const tag of post.data.tags) {
+				prev[tag] = (prev[tag] || 0) + 1;
+			}
+			return prev;
+		},
+		{} as { [key: string]: number },
+	);
 }
