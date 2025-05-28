@@ -5,16 +5,14 @@ import sitemap from "@astrojs/sitemap";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
+import expressiveCode from "astro-expressive-code";
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://blog.node189.top/",
-  prefetch: true,
-  trailingSlash: "never",
+	prefetch: true,
+	trailingSlash: "never",
 	markdown: {
-		shikiConfig: {
-			theme: "dracula",
-			wrap: false,
-		},
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [
 			[
@@ -26,6 +24,10 @@ export default defineConfig({
 		],
 	},
 	integrations: [
+		expressiveCode({
+			themes: ["dracula", "one-light"],
+			themeCssSelector: (theme) => `.${theme.type}`,
+		}),
 		mdx({}),
 		tailwind({
 			applyBaseStyles: false,
