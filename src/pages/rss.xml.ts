@@ -15,6 +15,7 @@ export const GET: APIRoute = async () => {
 		description: siteMeta.description,
 		stylesheet: "/rss-style.xsl",
 		site: import.meta.env.SITE,
+		trailingSlash: false, // Remove the slash end of the link
 		items: posts.map((post) => ({
 			title: post.data.title,
 			description: post.data.description,
