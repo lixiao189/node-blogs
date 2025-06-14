@@ -31,6 +31,12 @@ const {
 				return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 			}
 
+			function toggleThemeClass(isDark) {
+				// initailse root class attribute
+				root.classList.toggle("dark", isDark);
+				root.classList.toggle("light", !isDark);
+			}
+
 			const isDark = getThemePreference() === "dark";
 
 			// watch document element class attribute and update user preference when it changes.
@@ -47,9 +53,7 @@ const {
 				}
 			});
 			observer.observe(root, { attributeFilter: ["class"] });
-
-			// initailse root class attribute
-			root.classList.toggle("dark", isDark);
+			toggleThemeClass(isDark);
 		</script>
 	</head>
 	<body>

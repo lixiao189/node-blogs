@@ -4,9 +4,14 @@
 			super();
 			const button = this.querySelector("button") as HTMLButtonElement;
 
+			function toggleThemeClass(isDark: boolean) {
+				document.documentElement.classList.toggle("dark", isDark);
+				document.documentElement.classList.toggle("light", !isDark);
+			}
+
 			function setTheme(dark: boolean) {
 				// This could/should be a CustomEvent()
-				document.documentElement.classList.toggle("dark", dark);
+				toggleThemeClass(dark);
 				// set the aria-pressed attribute, dark mode === aria-pressed=true
 				button.setAttribute("aria-pressed", String(dark));
 			}
