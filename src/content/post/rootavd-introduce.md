@@ -33,3 +33,11 @@ cd rootAVD
 最后虚拟机会进入重启，如果重启黑屏了我们需要把虚拟机设置为冷启动，这样完整重启一下就能完成 root 了
 
 ![T8Xui6](https://picture-1303128679.cos.ap-shanghai.myqcloud.com/uPic/T8Xui6.png)
+
+最后配置好虚拟机以后不要忘记关闭麦克风，要不然使用虚拟机的时候会干扰我的蓝牙耳机
+在 `~/.android/avd/{emulator_name}/config.ini` 中添加如下配置关闭虚拟机的麦克风
+
+```ini
+hw.audioInput=no
+hw.audioOutput=no
+```
