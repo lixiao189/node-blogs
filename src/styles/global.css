@@ -185,11 +185,11 @@ html:active-view-transition-type(back) {
 }
 
 .prose :where(h2) {
-	@apply border-border mt-12 border-b pb-2 text-xl;
+	@apply border-border mt-8 mb-4 border-b pb-2 text-xl;
 }
 
 .prose :where(h3) {
-	@apply text-lg;
+	@apply mt-7 mb-3 text-lg;
 }
 
 .prose .heading-anchor {
@@ -285,6 +285,32 @@ html:active-view-transition-type(back) {
 	.prose img[data-loading],
 	.prose img[data-loaded] {
 		animation: none;
+	}
+}
+
+/* TOC popover grows out of its corner button */
+.toc-panel {
+	transform-origin: bottom right;
+	opacity: 0;
+	transform: translateY(8px) scale(0.96);
+	transition:
+		opacity 180ms ease,
+		transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+		overlay 220ms allow-discrete,
+		display 220ms allow-discrete;
+
+	&:popover-open {
+		opacity: 1;
+		transform: none;
+
+		@starting-style {
+			opacity: 0;
+			transform: translateY(8px) scale(0.96);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
 	}
 }
 

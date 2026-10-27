@@ -29,7 +29,7 @@ const headings = Astro.props.headings.filter((h) => h.depth >= 2 && h.depth <= 3
 
 <script>
 	// Highlight the section currently in view
-	// The TOC renders twice (inline on mobile, sidebar on desktop), so match links by slug
+	// The TOC renders twice (inline on narrow screens, popover on wide ones), so match links by slug
 	const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc a[data-slug]")];
 	const slugs = [...new Set(links.map((a) => a.dataset.slug ?? ""))];
 
