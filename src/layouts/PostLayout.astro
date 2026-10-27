@@ -131,3 +131,23 @@ const schema = [
 		</aside>
 	</div>
 </BaseLayout>
+
+<script>
+	import mediumZoom from "medium-zoom";
+
+	// Linked images keep their link; everything else in the article can be zoomed
+	const images = [...document.querySelectorAll<HTMLImageElement>(".prose img:not(a img)")];
+
+	for (const img of document.querySelectorAll<HTMLImageElement>(".prose img")) {
+		if (img.complete && img.naturalWidth) continue;
+		img.dataset.loading = "";
+		const done = () => {
+			img.removeAttribute("data-loading");
+			img.toggleAttribute("data-loaded", img.naturalWidth > 0);
+		};
+		img.addEventListener("load", done, { once: true });
+		img.addEventListener("error", done, { once: true });
+	}
+
+	mediumZoom(images, { margin: 24, background: "var(--theme-bg)" });
+</script>

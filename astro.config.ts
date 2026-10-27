@@ -9,6 +9,19 @@ import rehypeKatex from "rehype-katex";
 import { remarkAlert } from "remark-github-blockquote-alert";
 import remarkMath from "remark-math";
 
+// Markdown images are mostly remote screenshots; defer them until they near the viewport
+function rehypeLazyImages() {
+	// biome-ignore lint/suspicious/noExplicitAny: minimal hast walk, no extra types dependency
+	const walk = (node: any) => {
+		if (node.type === "element" && node.tagName === "img") {
+			node.properties.loading ??= "lazy";
+			node.properties.decoding ??= "async";
+		}
+		node.children?.forEach(walk);
+	};
+	return walk;
+}
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://blog.node189.top",
@@ -40,6 +53,7 @@ export default defineConfig({
 					},
 				],
 				rehypeKatex,
+				rehypeLazyImages,
 			],
 		}),
 	},

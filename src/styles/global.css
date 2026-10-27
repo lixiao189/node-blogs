@@ -240,8 +240,58 @@ html:active-view-transition-type(back) {
 	display: none;
 }
 
+/* Images sit inside a paragraph that already has margins, so add none of their own */
 .prose :where(img) {
-	@apply mx-auto rounded-lg;
+	@apply mx-auto my-0 block rounded-lg;
+}
+
+.prose :where(img + img) {
+	@apply mt-3;
+}
+
+/* Shimmer placeholder while an image loads (set by PostLayout), then a short reveal */
+.prose img[data-loading] {
+	@apply min-h-48 w-full;
+	color: transparent;
+	background:
+		linear-gradient(
+			100deg,
+			var(--theme-surface) 40%,
+			color-mix(in oklab, var(--theme-border) 70%, var(--theme-surface)) 50%,
+			var(--theme-surface) 60%
+		)
+		0 0 / 200% 100%;
+	animation: img-shimmer 1.4s linear infinite;
+}
+
+.prose img[data-loaded] {
+	animation: img-reveal 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes img-shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}
+
+@keyframes img-reveal {
+	from {
+		opacity: 0;
+		transform: scale(0.98);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.prose img[data-loading],
+	.prose img[data-loaded] {
+		animation: none;
+	}
+}
+
+/* Zoomed image and its backdrop must cover the sticky header */
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+	z-index: 50;
 }
 
 .prose :where(table) {
