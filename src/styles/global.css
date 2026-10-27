@@ -185,11 +185,11 @@ html:active-view-transition-type(back) {
 }
 
 .prose :where(h2) {
-	@apply border-border mt-12 border-b pb-2 text-xl;
+	@apply border-border mt-8 mb-4 border-b pb-2 text-xl;
 }
 
 .prose :where(h3) {
-	@apply text-lg;
+	@apply mt-7 mb-3 text-lg;
 }
 
 .prose .heading-anchor {
