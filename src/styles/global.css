@@ -294,6 +294,21 @@ html:active-view-transition-type(back) {
 	z-index: 50;
 }
 
+/* An untitled terminal frame would only show an empty title bar; render it as a plain block */
+.prose .expressive-code .frame.is-terminal:not(.has-title) {
+	/* The copy button no longer has a title bar to sit below */
+	--button-spacing: 0.4rem;
+
+	.header {
+		display: none;
+	}
+
+	pre {
+		border-top: var(--ec-brdWd) solid var(--ec-brdCol);
+		border-radius: var(--ec-brdRad);
+	}
+}
+
 .prose :where(table) {
 	@apply block overflow-x-auto text-sm;
 }
