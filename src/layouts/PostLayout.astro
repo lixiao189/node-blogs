@@ -1,0 +1,133 @@
+---
+import type { MarkdownHeading } from "astro";
+import { Image } from "astro:assets";
+import Icon from "@/components/Icon.astro";
+import PostNav from "@/components/post/PostNav.astro";
+import TagList from "@/components/post/TagList.astro";
+import Toc from "@/components/post/Toc.astro";
+import { formatDate } from "@/lib/date";
+import { type Post, getReadingMinutes, postUrl } from "@/lib/posts";
+import { site } from "@/site.config";
+import BaseLayout from "./BaseLayout.astro";
+import "katex/dist/katex.min.css";
+
+interface Props {
+	post: Post;
+	headings: MarkdownHeading[];
+	newer?: Post | undefined;
+	older?: Post | undefined;
+}
+
+const { post, headings, newer, older } = Astro.props;
+const { title, description, publishDate, updatedDate, tags, cover, coverAlt, ogImage } = post.data;
+
+const socialImage = ogImage ?? `/og-image/${post.id}.png`;
+const url = new URL(postUrl(post), Astro.site).href;
+const editUrl = `https://github.com/lixiao189/node-blogs/edit/main/${post.filePath}`;
+
+const schema = [
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		headline: title,
+		description,
+		url,
+		mainEntityOfPage: url,
+		image: new URL(socialImage, Astro.site).href,
+		datePublished: publishDate.toISOString(),
+		dateModified: (updatedDate ?? publishDate).toISOString(),
+		keywords: tags.join(", "),
+		inLanguage: site.lang,
+		author: { "@type": "Person", name: site.author, url: Astro.site?.href },
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: "首页", item: Astro.site?.href },
+			{ "@type": "ListItem", position: 2, name: "文章", item: new URL("/posts", Astro.site).href },
+			{ "@type": "ListItem", position: 3, name: title, item: url },
+		],
+	},
+];
+---
+
+<BaseLayout
+	title={title}
+	description={description}
+	image={socialImage}
+	article={{ publishedTime: publishDate, modifiedTime: updatedDate, tags }}
+	schema={schema}
+>
+	<!-- Article fills the page column; on wide screens the TOC takes a fixed right rail -->
+	<div class="xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-14">
+		<article class="w-full min-w-0">
+			<header class="mb-10">
+				<h1 class="text-[1.75rem] leading-snug font-bold tracking-tight text-heading sm:text-3xl">
+					{title}
+				</h1>
+				<div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
+					<span class="inline-flex items-center gap-1.5">
+						<Icon name="calendar" class="size-4" />
+						<time datetime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
+					</span>
+					{updatedDate && (
+						<span class="inline-flex items-center gap-1.5">
+							<Icon name="edit" class="size-4" />
+							更新于 <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+						</span>
+					)}
+					<span class="inline-flex items-center gap-1.5">
+						<Icon name="clock" class="size-4" />约 {getReadingMinutes(post)} 分钟
+					</span>
+				</div>
+				{tags.length > 0 && (
+					<div class="mt-4">
+						<TagList tags={tags} />
+					</div>
+				)}
+				{cover && (
+					<Image
+						src={cover}
+						alt={coverAlt ?? title}
+						class="mt-8 w-full rounded-xl"
+						loading="eager"
+						fetchpriority="high"
+					/>
+				)}
+			</header>
+
+			{headings.filter((h) => h.depth <= 3).length > 1 && (
+				<details class="mb-8 rounded-xl border border-border px-4 py-3 xl:hidden">
+					<summary class="cursor-pointer text-sm font-semibold text-heading select-none">
+						目录
+					</summary>
+					<div class="mt-3 [&_.toc>p]:hidden">
+						<Toc headings={headings} />
+					</div>
+				</details>
+			)}
+
+			<div class="prose">
+				<slot />
+			</div>
+
+			<footer class="mt-12 flex items-center justify-between border-t border-border pt-6 text-sm">
+				<a href={editUrl} class="inline-flex items-center gap-1.5 text-muted hover:text-heading">
+					<Icon name="edit" class="size-4" /> 在 GitHub 上编辑
+				</a>
+				<a href="#main" class="inline-flex items-center gap-1.5 text-muted hover:text-heading">
+					<Icon name="arrow-up" class="size-4" /> 回到顶部
+				</a>
+			</footer>
+
+			<PostNav newer={newer} older={older} />
+		</article>
+
+		<aside class="hidden xl:block" aria-label="文章目录">
+			<div class="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+				<Toc headings={headings} />
+			</div>
+		</aside>
+	</div>
+</BaseLayout>

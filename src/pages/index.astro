@@ -1,31 +1,37 @@
 ---
-import { getCollection } from "astro:content";
-import PageLayout from "@/layouts/Base";
-import PostPreview from "@/components/blog/PostPreview";
-import { sortMDByDate } from "@/utils";
+import PostItem from "@/components/post/PostItem.astro";
+import TagList from "@/components/post/TagList.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getPosts, getTagsWithCount } from "@/lib/posts";
+import { site } from "@/site.config";
 
-const MAX_POSTS = 15;
-const allPosts = await getCollection("post");
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
-
-const meta = {
-	title: "Home",
-	description: "A simple blog about PWN and RE",
-};
+const posts = await getPosts();
+const recent = posts.slice(0, site.postsPerHomePage);
+const topTags = getTagsWithCount(posts).slice(0, 12);
 ---
 
-<PageLayout meta={meta}>
-	<!-- posts list -->
-	<section aria-label="Blog post list" class="basis-3/4">
-		<div class="title mb-4 text-xl">Recent posts</div>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				allPostsByDate.map((p) => (
-					<li class="flex flex-col gap-x-2 sm:flex-row">
-						<PostPreview post={p} />
-					</li>
-				))
-			}
+<BaseLayout>
+	<h1 class="sr-only">{site.title}</h1>
+	<section aria-labelledby="recent-heading">
+		<div class="mb-2 flex items-baseline justify-between">
+			<h2 id="recent-heading" class="text-sm font-semibold tracking-widest text-muted uppercase">
+				最近更新
+			</h2>
+			<a href="/posts" class="text-sm text-muted hover:text-heading">
+				共 {posts.length} 篇 →
+			</a>
+		</div>
+		<ul class="divide-y divide-border/60">
+			{recent.map((post) => (
+				<PostItem post={post} />
+			))}
 		</ul>
 	</section>
-</PageLayout>
+
+	<section aria-labelledby="tags-heading" class="mt-14">
+		<h2 id="tags-heading" class="mb-4 text-sm font-semibold tracking-widest text-muted uppercase">
+			常用标签
+		</h2>
+		<TagList tags={topTags} />
+	</section>
+</BaseLayout>

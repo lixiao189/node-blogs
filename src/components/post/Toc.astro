@@ -1,0 +1,54 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const headings = Astro.props.headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{headings.length > 1 && (
+	<nav aria-label="目录" class="toc text-sm">
+		<p class="mb-3 font-semibold text-heading">目录</p>
+		<ol class="space-y-1.5 border-l border-border">
+			{headings.map((h) => (
+				<li class:list={[h.depth === 3 && "pl-3"]}>
+					<a
+						href={`#${h.slug}`}
+						data-slug={h.slug}
+						class="-ml-px block border-l border-transparent pl-3 text-muted transition-colors hover:text-heading data-[active]:border-accent data-[active]:text-heading"
+					>
+						{h.text}
+					</a>
+				</li>
+			))}
+		</ol>
+	</nav>
+)}
+
+<script>
+	// Highlight the section currently in view
+	// The TOC renders twice (inline on mobile, sidebar on desktop), so match links by slug
+	const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc a[data-slug]")];
+	const slugs = [...new Set(links.map((a) => a.dataset.slug ?? ""))];
+
+	if (slugs.length) {
+		const visible = new Set<string>();
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					entry.isIntersecting ? visible.add(entry.target.id) : visible.delete(entry.target.id);
+				}
+				const active = slugs.find((slug) => visible.has(slug));
+				if (!active) return;
+				for (const link of links) link.toggleAttribute("data-active", link.dataset.slug === active);
+			},
+			{ rootMargin: "-64px 0px -60% 0px" },
+		);
+		for (const slug of slugs) {
+			const el = document.getElementById(slug);
+			if (el) observer.observe(el);
+		}
+	}
+</script>

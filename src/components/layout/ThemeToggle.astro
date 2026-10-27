@@ -1,0 +1,31 @@
+---
+import Icon from "@/components/Icon.astro";
+---
+
+<button
+	id="theme-toggle"
+	type="button"
+	class="inline-flex size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-surface hover:text-heading"
+	aria-label="切换深色模式"
+>
+	<Icon name="sun" class="hidden size-5 dark:block" />
+	<Icon name="moon" class="size-5 dark:hidden" />
+</button>
+
+<script>
+	const button = document.getElementById("theme-toggle") as HTMLButtonElement;
+	const root = document.documentElement;
+
+	const sync = () => button.setAttribute("aria-pressed", String(root.classList.contains("dark")));
+	sync();
+
+	button.addEventListener("click", () => {
+		const dark = !root.classList.contains("dark");
+		root.classList.toggle("dark", dark);
+		root.classList.toggle("light", !dark);
+		try {
+			localStorage.setItem("theme", dark ? "dark" : "light");
+		} catch {}
+		sync();
+	});
+</script>

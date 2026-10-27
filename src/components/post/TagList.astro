@@ -1,0 +1,23 @@
+---
+import { tagUrl } from "@/lib/posts";
+
+interface Props {
+	tags: string[] | [string, number][];
+}
+
+const items = Astro.props.tags.map((t) => (Array.isArray(t) ? t : ([t, undefined] as const)));
+---
+
+<ul class="flex flex-wrap gap-2">
+	{items.map(([tag, count]) => (
+		<li>
+			<a
+				href={tagUrl(tag)}
+				class="inline-flex items-center gap-1 rounded-full border border-border px-2.5 py-0.5 text-xs text-muted transition-colors hover:border-accent hover:text-accent"
+			>
+				#{tag}
+				{count !== undefined && <span class="opacity-60">{count}</span>}
+			</a>
+		</li>
+	))}
+</ul>

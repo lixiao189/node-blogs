@@ -5,15 +5,22 @@
 		"indentWidth": 2,
 		"lineWidth": 100,
 		"formatWithErrors": true,
-		"ignore": ["*.astro"]
+		"includes": [
+			"**",
+			"!**/*.astro"
+		]
 	},
-	"organizeImports": {
-		"enabled": true
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
 			"a11y": {
 				"noSvgWithoutTitle": "off"
 			},
@@ -32,5 +39,33 @@
 		"clientKind": "git",
 		"enabled": true,
 		"useIgnoreFile": true
-	}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"files": {
+		"includes": [
+			"**",
+			"!dist",
+			"!.astro",
+			"!**/*.min.css"
+		]
+	},
+	"overrides": [
+		{
+			"includes": [
+				"**/*.astro"
+			],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noUnusedImports": "off",
+						"noUnusedVariables": "off"
+					}
+				}
+			}
+		}
+	]
 }
