@@ -1,0 +1,49 @@
+---
+import { formatDate, formatShortDate } from "@/lib/date";
+import { type Post, postUrl } from "@/lib/posts";
+
+interface Props {
+	post: Post;
+	/** "card" shows the description, "compact" is a single archive row */
+	variant?: "card" | "compact";
+}
+
+const { post, variant = "card" } = Astro.props;
+const { title, description, publishDate, draft } = post.data;
+---
+
+{variant === "compact" ? (
+	<li>
+		<a
+			href={postUrl(post)}
+			class="group -mx-3 flex items-baseline gap-4 rounded-lg px-3 py-2 transition-colors hover:bg-surface"
+		>
+			<time
+				datetime={publishDate.toISOString()}
+				class="w-12 shrink-0 font-mono text-sm text-muted tabular-nums"
+			>
+				{formatShortDate(publishDate)}
+			</time>
+			<span class="text-fg group-hover:text-heading">
+				{title}
+				{draft && <span class="ml-2 text-xs text-accent">草稿</span>}
+			</span>
+		</a>
+	</li>
+) : (
+	<li>
+		<a
+			href={postUrl(post)}
+			class="group -mx-4 block rounded-xl px-4 py-4 transition-colors hover:bg-surface"
+		>
+			<h3 class="font-semibold text-heading">
+				{title}
+				{draft && <span class="ml-2 text-xs font-normal text-accent">草稿</span>}
+			</h3>
+			<p class="mt-1.5 line-clamp-2 text-sm text-muted">{description}</p>
+			<time datetime={publishDate.toISOString()} class="mt-2 block text-xs text-muted">
+				{formatDate(publishDate)}
+			</time>
+		</a>
+	</li>
+)}

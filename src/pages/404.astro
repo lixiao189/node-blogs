@@ -1,23 +1,26 @@
 ---
-import PageLayout from "@/layouts/Base";
 import { Image } from "astro:assets";
-import aboutImg from "../assets/about-astro.png";
-
-const meta = {
-	title: "Oops! You found a missing page!",
-	description: "Oops! It looks like this page is lost in space!",
-};
+import aboutImg from "@/assets/about-astro.png";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<PageLayout meta={meta}>
-	<h1 class="title mb-6">404 | Oops something went wrong</h1>
-	<p class="mb-8">Please use the navigation to find your way back</p>
-	<div class="my-4 grid justify-center">
+<BaseLayout title="页面不存在" description="这个页面迷失在太空里了。" noindex>
+	<div class="py-10 text-center">
+		<p class="font-mono text-sm text-accent">404</p>
+		<h1 class="mt-2 text-3xl font-bold tracking-tight text-heading">这个页面迷失在太空里了</h1>
+		<p class="mt-3 text-muted">链接可能已经失效，回首页或者去文章归档里找找看吧。</p>
+		<div class="mt-6 flex justify-center gap-3 text-sm">
+			<a href="/" class="rounded-full bg-heading px-4 py-2 text-bg hover:opacity-85">
+				回到首页
+			</a>
+			<a href="/posts" class="rounded-full border border-border px-4 py-2 hover:bg-surface">
+				文章归档
+			</a>
+		</div>
 		<Image
-			class="rotate-180"
+			class="mx-auto mt-10 w-60 rotate-180"
 			src={aboutImg}
 			alt="A cartoon cactus looking at the 'Astro.build' logo"
-			loading="eager"
 		/>
 	</div>
-</PageLayout>
+</BaseLayout>

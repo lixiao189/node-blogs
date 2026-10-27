@@ -1,77 +1,31 @@
 ---
-import PageLayout from "@/layouts/Base";
-
-const meta = {
-	title: "About",
-	description: "Loving RE, loving pwn, loving anime.",
-};
-
-interface Link {
-	text: string;
-	link: string;
-}
-
-const links: Link[] = [
-	{
-		text: "小高的博客：一个脱离了低级趣味的二进制佬",
-		link: "https://blog.gaoyucan.site",
-	},
-	{
-		text: "S1ain 的博客：安徽 Web 佬",
-		link: "https://gensokyo.cn/",
-	},
-	{
-		text: "Info 富哥的博客：澳爷👴",
-		link: "https://blog.i1nfo.com/",
-	},
-	{
-		text: "好人Simon 的博客: 好人一生平安",
-		link: "blog.polite.cat",
-	},
-	{
-		text: "冰冰的博客: 这个冰冰就是勇啦",
-		link: "https://zhul.in/links/",
-	},
-	{
-		text: "J10C 的博客: 在杭大学生",
-		link: "https://site.j10ccc.xyz/zh-cn/",
-	},
-	{
-		text: "派大星的博客: 天无二日，忠诚！",
-		link: "https://blog.cnpatrickstar.com/",
-	},
-	{
-		text: "姥爷的博客: 意外的画风很可爱",
-		link: "https://www.f1nley.xyz/",
-	},
-	{
-		text: "望舒的尘歌壶: 在高洁的冰之女皇麾下, 我们将攫取众神的权柄!",
-		link: "https://blog.phlin.top/",
-	},
-	{
-		text: "杨骏的博客：狠狠做二进制",
-		link: "https://le-premier-homme.top/",
-	},
-];
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { friends } from "@/site.config";
 ---
 
-<PageLayout meta={meta}>
-	<div class="space-y-6">
-		<div class="title mb-4 text-xl">About</div>
+<BaseLayout title="关于" description="Loving RE, loving pwn, loving anime.">
+	<h1 class="text-3xl font-bold tracking-tight text-heading">关于</h1>
+	<div class="prose mt-6">
 		<p>
 			全民制作人大家好，我是练习 n 年半的二进制安全练习生，喜欢 PWN, RE, 本来以前很喜欢 cxk
 			的，现在更喜欢了
 		</p>
-
-		<div class="title mb-4 text-xl">Links</div>
-		<ul class="list-inside list-disc">
-			{
-				links.map((link) => (
-					<li>
-						<a href={link.link}>{link.text}</a>
-					</li>
-				))
-			}
-		</ul>
 	</div>
-</PageLayout>
+
+	<h2 class="mt-14 mb-4 text-xl font-semibold text-heading">友链</h2>
+	<ul class="grid gap-3 sm:grid-cols-2">
+		{friends.map((f) => (
+			<li>
+				<a
+					href={f.href}
+					target="_blank"
+					rel="noopener"
+					class="block h-full rounded-xl border border-border p-4 transition-colors hover:border-accent"
+				>
+					<span class="block font-medium text-heading">{f.name}</span>
+					<span class="mt-1 block text-sm text-muted">{f.desc}</span>
+				</a>
+			</li>
+		))}
+	</ul>
+</BaseLayout>

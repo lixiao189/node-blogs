@@ -1,0 +1,29 @@
+---
+import PostItem from "@/components/post/PostItem.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getPosts, groupByYear } from "@/lib/posts";
+
+const posts = await getPosts();
+const years = groupByYear(posts);
+---
+
+<BaseLayout title="文章归档" description={`按时间整理的全部 ${posts.length} 篇文章。`}>
+	<h1 class="text-3xl font-bold tracking-tight text-heading">文章归档</h1>
+	<p class="mt-2 text-muted">共 {posts.length} 篇，按时间倒序排列。</p>
+
+	<div class="mt-10 space-y-10">
+		{years.map(([year, list]) => (
+			<section aria-labelledby={`y${year}`}>
+				<h2 id={`y${year}`} class="mb-2 flex items-baseline gap-3 font-mono text-heading">
+					<span class="text-xl font-semibold">{year}</span>
+					<span class="text-xs text-muted">{list.length} 篇</span>
+				</h2>
+				<ul>
+					{list.map((post) => (
+						<PostItem post={post} variant="compact" />
+					))}
+				</ul>
+			</section>
+		))}
+	</div>
+</BaseLayout>

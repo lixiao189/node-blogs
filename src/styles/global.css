@@ -1,37 +1,341 @@
-@tailwind base;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	/* Shared page column for header, main and footer; posts split it into article + TOC */
+	--container-page: 72rem;
+
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+		"Microsoft YaHei", "Noto Sans SC", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+	--font-mono:
+		ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+	--color-bg: var(--theme-bg);
+	--color-surface: var(--theme-surface);
+	--color-border: var(--theme-border);
+	--color-fg: var(--theme-fg);
+	--color-muted: var(--theme-muted);
+	--color-heading: var(--theme-heading);
+	--color-accent: var(--theme-accent);
+	--color-link: var(--theme-link);
+}
+
 @layer base {
 	:root {
 		color-scheme: light;
 		--theme-bg: #fafafa;
-		--theme-link: #567c77;
-		--theme-text: #22272a;
+		--theme-surface: #f1f1f2;
+		--theme-border: #e4e4e7;
+		--theme-fg: #2e3135;
+		--theme-muted: #73767d;
+		--theme-heading: #111214;
 		--theme-accent: #cc2a42;
-		--theme-accent-2: #111;
-		--theme-quote: #cc2a42;
-		--theme-menu-bg: rgb(250 250 250 / 0.85);
+		--theme-link: #3f7a73;
 	}
 
 	:root.dark {
 		color-scheme: dark;
-		--theme-bg: #1d1f21;
-		--theme-link: #d480aa;
-		--theme-text: #c9cacc;
+		--theme-bg: #18191b;
+		--theme-surface: #222326;
+		--theme-border: #2f3135;
+		--theme-fg: #c9cacc;
+		--theme-muted: #8b8d92;
+		--theme-heading: #f1f1f2;
 		--theme-accent: #2bbc89;
-		--theme-accent-2: #eee;
-		--theme-quote: #ccffb6;
-		--theme-menu-bg: rgb(29 31 33 / 0.85);
+		--theme-link: #e08bb5;
 	}
 
 	html {
-		@apply h-full scroll-smooth border-t-2 border-bgColor;
-	}
-	body {
-		min-height: 1024px;
+		@apply bg-bg text-fg scroll-pt-20 antialiased;
+		font-family: var(--font-sans);
+		text-underline-offset: 0.2em;
 	}
 
-	html body {
-		@apply mx-auto flex h-full min-h-screen max-w-3xl flex-col bg-bgColor px-8 pt-10 font-sans text-sm font-normal text-textColor antialiased;
+	body {
+		@apply flex min-h-dvh flex-col text-[15px] leading-relaxed;
+	}
+
+	::selection {
+		background-color: color-mix(in oklab, var(--theme-accent) 25%, transparent);
+	}
+
+	:focus-visible {
+		@apply outline-accent rounded-sm outline-2 outline-offset-2;
 	}
 }
-@tailwind components;
-@tailwind utilities;
+
+/*
+ * Cross-document page transitions, no client-side router: an iOS-style push.
+ * The incoming page slides in from the right over the outgoing one, which drifts
+ * left and dims; history back runs it in reverse. The header stays put.
+ */
+@view-transition {
+	navigation: auto;
+}
+
+@keyframes vt-push-in {
+	from {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes vt-push-out {
+	to {
+		transform: translateX(-30%);
+		filter: brightness(0.85);
+	}
+}
+
+@keyframes vt-pop-in {
+	from {
+		transform: translateX(-30%);
+		filter: brightness(0.85);
+	}
+}
+
+@keyframes vt-pop-out {
+	to {
+		transform: translateX(100%);
+	}
+}
+
+/* Both snapshots stay fully opaque; drop the default cross-fade blending */
+::view-transition-old(root),
+::view-transition-new(root) {
+	mix-blend-mode: normal;
+	animation-duration: 450ms;
+	animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+	animation-fill-mode: both;
+}
+
+::view-transition-old(root) {
+	animation-name: vt-push-out;
+}
+
+::view-transition-new(root) {
+	animation-name: vt-push-in;
+	box-shadow: -8px 0 24px rgb(0 0 0 / 0.12);
+}
+
+html:active-view-transition-type(back) {
+	&::view-transition-old(root) {
+		z-index: 1;
+		animation-name: vt-pop-out;
+		box-shadow: -8px 0 24px rgb(0 0 0 / 0.12);
+	}
+
+	&::view-transition-new(root) {
+		animation-name: vt-pop-in;
+		box-shadow: none;
+	}
+}
+
+::view-transition-group(site-header) {
+	animation: none;
+}
+
+::view-transition-old(site-header) {
+	display: none;
+}
+
+::view-transition-new(site-header) {
+	animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	@view-transition {
+		navigation: none;
+	}
+}
+
+@utility container-page {
+	@apply max-w-page mx-auto w-full px-5 sm:px-8;
+}
+
+@utility link-underline {
+	@apply decoration-border hover:text-link hover:decoration-link underline decoration-1 underline-offset-4 transition-colors;
+}
+
+/* Unlayered on purpose: the typography plugin emits .prose into the utilities layer */
+.prose {
+	--tw-prose-body: var(--theme-fg);
+	--tw-prose-headings: var(--theme-heading);
+	--tw-prose-lead: var(--theme-muted);
+	--tw-prose-links: var(--theme-link);
+	--tw-prose-bold: var(--theme-heading);
+	--tw-prose-counters: var(--theme-muted);
+	--tw-prose-bullets: var(--theme-muted);
+	--tw-prose-hr: var(--theme-border);
+	--tw-prose-quotes: var(--theme-fg);
+	--tw-prose-quote-borders: var(--theme-accent);
+	--tw-prose-captions: var(--theme-muted);
+	--tw-prose-code: var(--theme-heading);
+	--tw-prose-th-borders: var(--theme-border);
+	--tw-prose-td-borders: var(--theme-border);
+	@apply max-w-none text-base leading-[1.85];
+	/* Long inline code and URLs wrap instead of widening the page on phones */
+	overflow-wrap: break-word;
+}
+
+.prose :where(h2, h3, h4) {
+	@apply relative scroll-mt-20 font-semibold;
+}
+
+.prose :where(h2) {
+	@apply border-border mt-12 border-b pb-2 text-xl;
+}
+
+.prose :where(h3) {
+	@apply text-lg;
+}
+
+.prose .heading-anchor {
+	@apply text-muted ml-2 font-normal no-underline opacity-0 transition-opacity;
+}
+
+.prose :where(h2, h3, h4):hover .heading-anchor {
+	@apply opacity-100;
+}
+
+.prose :where(a):not(.heading-anchor) {
+	@apply font-normal underline decoration-1 underline-offset-4 hover:decoration-2;
+}
+
+.prose :where(:not(pre) > code) {
+	@apply bg-surface rounded-md px-1.5 py-0.5 text-[0.85em] font-normal;
+}
+
+.prose :where(:not(pre) > code)::before,
+.prose :where(:not(pre) > code)::after {
+	content: none;
+}
+
+.prose :where(blockquote) {
+	@apply text-muted border-l-2 font-normal not-italic;
+}
+
+.prose :where(blockquote p)::before,
+.prose :where(blockquote p)::after {
+	content: none;
+}
+
+/* Expressive Code blocks: breathing room between consecutive blocks */
+.prose .expressive-code {
+	@apply my-6;
+}
+
+.prose .expressive-code + .expressive-code {
+	@apply mt-4;
+}
+
+/* Long lines still scroll sideways, just without a visible scrollbar */
+.prose .expressive-code pre {
+	scrollbar-width: none;
+}
+
+.prose .expressive-code pre::-webkit-scrollbar {
+	display: none;
+}
+
+/* Images sit inside a paragraph that already has margins, so add none of their own */
+.prose :where(img) {
+	@apply mx-auto my-0 block rounded-lg;
+}
+
+.prose :where(img + img) {
+	@apply mt-3;
+}
+
+/* Shimmer placeholder while an image loads (set by PostLayout), then a short reveal */
+.prose img[data-loading] {
+	@apply min-h-48 w-full;
+	color: transparent;
+	background:
+		linear-gradient(
+			100deg,
+			var(--theme-surface) 40%,
+			color-mix(in oklab, var(--theme-border) 70%, var(--theme-surface)) 50%,
+			var(--theme-surface) 60%
+		)
+		0 0 / 200% 100%;
+	animation: img-shimmer 1.4s linear infinite;
+}
+
+.prose img[data-loaded] {
+	animation: img-reveal 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes img-shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}
+
+@keyframes img-reveal {
+	from {
+		opacity: 0;
+		transform: scale(0.98);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.prose img[data-loading],
+	.prose img[data-loaded] {
+		animation: none;
+	}
+}
+
+/* Zoomed image and its backdrop must cover the sticky header */
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+	z-index: 50;
+}
+
+.prose :where(table) {
+	@apply block overflow-x-auto text-sm;
+}
+
+.prose :where(.katex-display) {
+	@apply overflow-x-auto overflow-y-hidden py-1;
+}
+
+/* GitHub style callouts: > [!NOTE] / [!TIP] / [!IMPORTANT] / [!WARNING] / [!CAUTION] */
+.prose .markdown-alert {
+	--alert: var(--theme-link);
+	@apply text-fg my-6 rounded-r-lg border-l-4 py-3 pr-4 pl-4;
+	border-color: var(--alert);
+	background-color: color-mix(in oklab, var(--alert) 8%, transparent);
+}
+
+.prose .markdown-alert > p {
+	@apply my-1;
+}
+
+.prose .markdown-alert > :last-child {
+	@apply mb-0;
+}
+
+.prose .markdown-alert-title {
+	@apply mt-0 mb-1 flex items-center gap-2 font-semibold;
+	color: var(--alert);
+}
+
+.prose .markdown-alert-title svg {
+	@apply size-4 fill-current;
+}
+
+.prose .markdown-alert-tip {
+	--alert: #1f9d55;
+}
+.prose .markdown-alert-important {
+	--alert: #8b5cf6;
+}
+.prose .markdown-alert-warning {
+	--alert: #d97706;
+}
+.prose .markdown-alert-caution {
+	--alert: #dc2626;
+}

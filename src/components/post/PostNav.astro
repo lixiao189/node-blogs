@@ -1,0 +1,42 @@
+---
+import Icon from "@/components/Icon.astro";
+import { type Post, postUrl } from "@/lib/posts";
+
+interface Props {
+	newer?: Post | undefined;
+	older?: Post | undefined;
+}
+
+const { newer, older } = Astro.props;
+---
+
+{(newer || older) && (
+	<nav aria-label="相邻文章" class="mt-16 grid gap-3 sm:grid-cols-2">
+		{older ? (
+			<a
+				href={postUrl(older)}
+				rel="prev"
+				class="group rounded-xl border border-border p-4 transition-colors hover:border-accent"
+			>
+				<span class="flex items-center gap-1 text-xs text-muted">
+					<Icon name="arrow-left" class="size-3.5" /> 上一篇
+				</span>
+				<span class="mt-1 block text-sm text-heading">{older.data.title}</span>
+			</a>
+		) : (
+			<span class="hidden sm:block" />
+		)}
+		{newer && (
+			<a
+				href={postUrl(newer)}
+				rel="next"
+				class="group rounded-xl border border-border p-4 text-right transition-colors hover:border-accent"
+			>
+				<span class="flex items-center justify-end gap-1 text-xs text-muted">
+					下一篇 <Icon name="arrow-right" class="size-3.5" />
+				</span>
+				<span class="mt-1 block text-sm text-heading">{newer.data.title}</span>
+			</a>
+		)}
+	</nav>
+)}

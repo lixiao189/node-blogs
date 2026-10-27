@@ -1,7 +1,8 @@
 {
-	"name": "Node Sans's Blog",
-	"short_name": "node189-blog",
-	"description": "Node Sans's blog on vercel",
+	"name": "Node Sans Blog",
+	"short_name": "Node Sans",
+	"description": "Node Sans 的博客：PWN、逆向工程与开发工具链笔记",
+	"lang": "zh-CN",
 	"icons": [
 		{
 			"src": "/192x192.png",
@@ -15,7 +16,7 @@
 		}
 	],
 	"start_url": "/",
-	"background_color": "#1d1f21",
-	"theme_color": "#2bbc8a",
+	"background_color": "#18191b",
+	"theme_color": "#2bbc89",
 	"display": "standalone"
 }

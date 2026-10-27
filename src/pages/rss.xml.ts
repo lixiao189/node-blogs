@@ -1,27 +1,29 @@
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
-import sanitizeHtml from "sanitize-html";
-import MarkdownIt from "markdown-it";
-import siteMeta from "@/site-config";
 import type { APIRoute } from "astro";
+import sanitizeHtml from "sanitize-html";
+import { getPosts, postUrl } from "@/lib/posts";
+import { site } from "@/site.config";
 
-const parser = new MarkdownIt();
-
-export const GET: APIRoute = async () => {
-	const posts = await getCollection("post");
+export const GET: APIRoute = async (context) => {
+	const posts = await getPosts();
 
 	return rss({
-		title: siteMeta.title,
-		description: siteMeta.description,
+		title: site.title,
+		description: site.description,
+		site: context.site ?? "",
 		stylesheet: "/rss-style.xsl",
-		site: import.meta.env.SITE,
-		trailingSlash: false, // Remove the slash end of the link
+		trailingSlash: false,
+		customData: `<language>${site.lang}</language>`,
 		items: posts.map((post) => ({
 			title: post.data.title,
 			description: post.data.description,
-			content: sanitizeHtml(parser.render(post.body === undefined ? "" : post.body)),
 			pubDate: post.data.publishDate,
-			link: `/posts/${post.id}`,
+			link: postUrl(post),
+			categories: post.data.tags,
+			// The glob loader already rendered the Markdown, reuse it instead of re-parsing
+			content: sanitizeHtml(post.rendered?.html ?? "", {
+				allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+			}),
 		})),
 	});
 };

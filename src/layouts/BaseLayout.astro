@@ -1,0 +1,58 @@
+---
+import Footer from "@/components/layout/Footer.astro";
+import Header from "@/components/layout/Header.astro";
+import BaseHead, { type Props as HeadProps } from "@/components/seo/BaseHead.astro";
+import { site } from "@/site.config";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import "@/styles/global.css";
+
+type Props = HeadProps;
+
+const head = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+	<head>
+		<BaseHead {...head} />
+		<!-- Runs before paint to avoid a flash of the wrong theme -->
+		<script is:inline>
+			(() => {
+				let theme;
+				try {
+					theme = localStorage.getItem("theme");
+				} catch {}
+				const dark = theme ? theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+				document.documentElement.classList.add(dark ? "dark" : "light");
+			})();
+		</script>
+		<!-- Tag history-back navigations so the page transition can run in reverse -->
+		<script is:inline>
+			addEventListener("pagereveal", (e) => {
+				const from = window.navigation?.activation?.from;
+				const to = window.navigation?.activation?.entry;
+				if (e.viewTransition && from && to && to.index < from.index) {
+					e.viewTransition.types.add("back");
+				}
+			});
+		</script>
+		<slot name="head" />
+	</head>
+	<body>
+		<a
+			href="#main"
+			class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:bg-surface focus:px-3 focus:py-2"
+		>
+			跳到正文
+		</a>
+		<Header />
+		<main
+			id="main"
+			class="container-page flex-1 pt-10 sm:pt-14"
+		>
+			<slot />
+		</main>
+		<Footer />
+		<SpeedInsights />
+	</body>
+</html>
