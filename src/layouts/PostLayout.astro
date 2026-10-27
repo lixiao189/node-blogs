@@ -21,6 +21,9 @@ interface Props {
 const { post, headings, newer, older } = Astro.props;
 const { title, description, publishDate, updatedDate, tags, cover, coverAlt, ogImage } = post.data;
 
+// A single heading is not worth a TOC; without one the article takes the whole column
+const hasToc = headings.filter((h) => h.depth <= 3).length > 1;
+
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const url = new URL(postUrl(post), Astro.site).href;
 const editUrl = `https://github.com/lixiao189/node-blogs/edit/main/${post.filePath}`;
@@ -60,9 +63,9 @@ const schema = [
 	schema={schema}
 >
 	<!-- Article fills the page column; on wide screens the TOC takes a fixed right rail -->
-	<div class="xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-14">
+	<div class:list={[hasToc && "xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-14"]}>
 		<article class="w-full min-w-0">
-			<header class="mb-10">
+			<header class="mb-8">
 				<h1 class="text-[1.75rem] leading-snug font-bold tracking-tight text-heading sm:text-3xl">
 					{title}
 				</h1>
@@ -97,7 +100,7 @@ const schema = [
 				)}
 			</header>
 
-			{headings.filter((h) => h.depth <= 3).length > 1 && (
+			{hasToc && (
 				<details class="mb-8 rounded-xl border border-border px-4 py-3 xl:hidden">
 					<summary class="cursor-pointer text-sm font-semibold text-heading select-none">
 						目录
@@ -124,11 +127,13 @@ const schema = [
 			<PostNav newer={newer} older={older} />
 		</article>
 
-		<aside class="hidden xl:block" aria-label="文章目录">
-			<div class="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto">
-				<Toc headings={headings} />
-			</div>
-		</aside>
+		{hasToc && (
+			<aside class="hidden xl:block" aria-label="文章目录">
+				<div class="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto">
+					<Toc headings={headings} />
+				</div>
+			</aside>
+		)}
 	</div>
 </BaseLayout>
 
