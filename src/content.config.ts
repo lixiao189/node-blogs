@@ -28,6 +28,8 @@ const post = defineCollection({
 				coverAlt: z.string().optional(),
 				// Absolute or /public path to override the generated social card
 				ogImage: z.string().optional(),
+				// Kept on the site for readers, but left out of the sitemap and Google's index
+				noindex: z.boolean().default(false),
 			})
 			.refine((post) => post.draft || !post.description.startsWith("TODO"), {
 				error: "发布前请把 description 里的 TODO 换成真正的摘要（或保留 draft: true）",

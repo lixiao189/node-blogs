@@ -19,7 +19,8 @@ interface Props {
 }
 
 const { post, headings, newer, older } = Astro.props;
-const { title, description, publishDate, updatedDate, tags, cover, coverAlt, ogImage } = post.data;
+const { title, description, publishDate, updatedDate, tags, cover, coverAlt, ogImage, noindex } =
+	post.data;
 
 // A single heading is not worth a TOC (same rule as Toc.astro)
 const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 1;
@@ -59,6 +60,7 @@ const schema = [
 	title={title}
 	description={description}
 	image={socialImage}
+	noindex={noindex}
 	article={{ publishedTime: publishDate, modifiedTime: updatedDate, tags }}
 	schema={schema}
 >

@@ -47,6 +47,7 @@ draft: true # 可选，草稿只在 pnpm dev 中可见，不会被构建发布
 cover: ./cover.png # 可选，文章目录内的封面图
 coverAlt: "封面描述"
 ogImage: "/custom-card.png" # 可选，覆盖自动生成的分享卡片
+noindex: true # 可选，占位文仍可访问，但不进 sitemap、也不要求搜索引擎收录
 ---
 ```
 

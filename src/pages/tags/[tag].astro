@@ -20,7 +20,7 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<BaseLayout title={`#${tag}`} description={`标签「${tag}」下的 ${posts.length} 篇文章。`}>
+<BaseLayout title={`#${tag}`} description={`标签「${tag}」下的 ${posts.length} 篇文章。`} noindex>
 	<p class="text-sm text-muted">
 		<a href="/tags" class="hover:text-heading">
 			标签

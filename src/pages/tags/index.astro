@@ -5,7 +5,7 @@ import { getPosts, getTagsWithCount, tagUrl } from "@/lib/posts";
 const tags = getTagsWithCount(await getPosts());
 ---
 
-<BaseLayout title="标签" description={`博客中的全部 ${tags.length} 个标签。`}>
+<BaseLayout title="标签" description={`博客中的全部 ${tags.length} 个标签。`} noindex>
 	<h1 class="text-3xl font-bold tracking-tight text-heading">标签</h1>
 	<p class="mt-2 text-muted">共 {tags.length} 个标签。</p>
 

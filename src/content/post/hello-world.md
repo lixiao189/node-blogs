@@ -3,6 +3,7 @@ title: "Hello World!"
 publishDate: "3 Feb 2023"
 description: "Hello world! My first blog!"
 tags: ["misc"]
+noindex: true
 ---
 
 ## Hello world!
