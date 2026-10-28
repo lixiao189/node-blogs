@@ -46,9 +46,8 @@ function loadPostSitemapMeta() {
 			if (!/\.(md|mdx)$/.test(name)) continue;
 			const raw = readFileSync(full, "utf8");
 			const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-			if (!fm) continue;
-			const block = fm[1];
-			if (/^draft:\s*true\s*$/m.test(block)) continue;
+			const block = fm?.[1];
+			if (!block || /^draft:\s*true\s*$/m.test(block)) continue;
 			const published = block.match(/^publishDate:\s*["']?(.+?)["']?\s*$/m)?.[1];
 			if (!published) continue;
 			const updated = block.match(/^updatedDate:\s*["']?(.+?)["']?\s*$/m)?.[1];
