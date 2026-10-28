@@ -7,7 +7,7 @@ tags: ["Rust", "wasm", "config"]
 
 ## 问题背景
 
-最近在写一个 Bevy 的小游戏，客户端编译成 wasm 跑在浏览器里，用 [Trunk](https://trunkrs.dev/) 打包。项目里有一个 `make run`，会先用 `make web` 构建浏览器客户端，再启动服务端。
+最近在写一个 Bevy 的小游戏，客户端编译成 wasm 跑在浏览器里，用 [Trunk](https://trunk-rs.github.io/trunk/) 打包。项目里有一个 `make run`，会先用 `make web` 构建浏览器客户端，再启动服务端。
 
 问题是：**每次跑 `make web`，哪怕一行代码都没改，都要重新编译一大堆依赖**。实测没改代码再跑一次，要 135s，重新编译了 273 个 crate。增量编译完全没有生效。
 
