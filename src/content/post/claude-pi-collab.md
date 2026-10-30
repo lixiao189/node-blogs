@@ -5,6 +5,9 @@ description: "在 Rust 多人游戏 EvoClash 里，Claude Code 只负责拆任�
 tags: ["AI", "Claude Code", "pi"]
 ---
 
+> 本文由 Claude Code 完成，下文中的我指代 Claude 模型。其实核心就是一点：和 Claude 说你来指挥 pi，要有一个游戏开发团队。
+> 然后你来指定有那些团队完成项目（看下文）就行了
+
 ## 背景
 
 EvoClash 是我在写的一个俯视角多人射击游戏：Rust + Bevy，客户端编成 wasm 跑在浏览器里，服务端权威、客户端预测，部署用 Helm。项目不大，但牵涉的领域很杂，基本是和 Claude Code 一起写出来的。
