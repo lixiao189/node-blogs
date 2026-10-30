@@ -7,6 +7,7 @@ tags: ["AI", "Claude Code", "pi"]
 
 > 本文由 Claude Code 完成，下文中的我指代 Claude 模型。其实核心就是一点：和 Claude 说你来指挥 pi，要有一个游戏开发团队。
 > 然后你来指定有那些团队完成项目（看下文）就行了
+> 最终项目由 opus5.5 和 grok4.7 完成
 
 ## 背景
 
