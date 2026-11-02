@@ -28,14 +28,22 @@ const headings = Astro.props.headings.filter((h) => h.depth >= 2 && h.depth <= 3
 )}
 
 <script>
-	// Highlight the section currently in view
-	// The TOC renders twice (inline on narrow screens, popover on wide ones), so match links by slug
-	const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc a[data-slug]")];
-	const slugs = [...new Set(links.map((a) => a.dataset.slug ?? ""))];
+	import { onPageLoad } from "@/lib/page-load";
 
-	if (slugs.length) {
+	let observer: IntersectionObserver | undefined;
+
+	onPageLoad(() => {
+		observer?.disconnect();
+		observer = undefined;
+
+		// Highlight the section currently in view
+		// The TOC renders twice (inline on narrow screens, popover on wide ones), so match links by slug
+		const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc a[data-slug]")];
+		const slugs = [...new Set(links.map((a) => a.dataset.slug ?? ""))];
+		if (!slugs.length) return;
+
 		const visible = new Set<string>();
-		const observer = new IntersectionObserver(
+		observer = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
 					entry.isIntersecting ? visible.add(entry.target.id) : visible.delete(entry.target.id);
@@ -50,5 +58,5 @@ const headings = Astro.props.headings.filter((h) => h.depth >= 2 && h.depth <= 3
 			const el = document.getElementById(slug);
 			if (el) observer.observe(el);
 		}
-	}
+	});
 </script>

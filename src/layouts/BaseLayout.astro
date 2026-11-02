@@ -54,5 +54,9 @@ const head = Astro.props;
 		</main>
 		<Footer />
 		<SpeedInsights />
+		<!-- Same page transition in browsers without cross-document view transitions (Firefox) -->
+		<script>
+			import "@/scripts/page-transition-fallback";
+		</script>
 	</body>
 </html>

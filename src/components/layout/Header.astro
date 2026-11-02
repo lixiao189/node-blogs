@@ -67,17 +67,23 @@ const isActive = (path: string) =>
 </header>
 
 <script>
-	const header = document.getElementById("site-header") as HTMLElement;
-	const toggle = document.getElementById("menu-toggle") as HTMLButtonElement;
-	const menu = document.getElementById("mobile-nav") as HTMLElement;
+	import { onPageLoad } from "@/lib/page-load";
 
-	toggle.addEventListener("click", () => {
-		const open = toggle.getAttribute("aria-expanded") !== "true";
-		toggle.setAttribute("aria-expanded", String(open));
-		menu.classList.toggle("hidden", !open);
-	});
-
-	const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
-	onScroll();
+	// Look the header up each time: the page-transition fallback replaces it
+	const onScroll = () =>
+		document.getElementById("site-header")?.classList.toggle("scrolled", window.scrollY > 8);
 	window.addEventListener("scroll", onScroll, { passive: true });
+
+	onPageLoad(() => {
+		const toggle = document.getElementById("menu-toggle") as HTMLButtonElement;
+		const menu = document.getElementById("mobile-nav") as HTMLElement;
+
+		toggle.addEventListener("click", () => {
+			const open = toggle.getAttribute("aria-expanded") !== "true";
+			toggle.setAttribute("aria-expanded", String(open));
+			menu.classList.toggle("hidden", !open);
+		});
+
+		onScroll();
+	});
 </script>

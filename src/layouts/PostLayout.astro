@@ -151,27 +151,38 @@ const schema = [
 </BaseLayout>
 
 <script>
-	import mediumZoom from "medium-zoom";
+	import { onPageLoad } from "@/lib/page-load";
+	import mediumZoom, { type Zoom } from "medium-zoom";
 
-	// Linked images keep their link; everything else in the article can be zoomed
-	const images = [...document.querySelectorAll<HTMLImageElement>(".prose img:not(a img)")];
+	let zoom: Zoom | undefined;
 
-	for (const img of document.querySelectorAll<HTMLImageElement>(".prose img")) {
-		if (img.complete && img.naturalWidth) continue;
-		img.dataset.loading = "";
-		const done = () => {
-			img.removeAttribute("data-loading");
-			img.toggleAttribute("data-loaded", img.naturalWidth > 0);
-		};
-		img.addEventListener("load", done, { once: true });
-		img.addEventListener("error", done, { once: true });
-	}
+	onPageLoad(() => {
+		zoom?.detach();
+		zoom = undefined;
 
-	mediumZoom(images, { margin: 24, background: "var(--theme-bg)" });
+		const article = document.querySelector(".prose");
+		if (!article) return;
 
-	// Jumping to a section should also put the TOC away
-	const tocPanel = document.getElementById("toc-panel");
-	tocPanel?.addEventListener("click", (e) => {
-		if ((e.target as Element).closest("a")) tocPanel.hidePopover();
+		// Linked images keep their link; everything else in the article can be zoomed
+		const images = [...article.querySelectorAll<HTMLImageElement>("img:not(a img)")];
+
+		for (const img of article.querySelectorAll<HTMLImageElement>("img")) {
+			if (img.complete && img.naturalWidth) continue;
+			img.dataset.loading = "";
+			const done = () => {
+				img.removeAttribute("data-loading");
+				img.toggleAttribute("data-loaded", img.naturalWidth > 0);
+			};
+			img.addEventListener("load", done, { once: true });
+			img.addEventListener("error", done, { once: true });
+		}
+
+		zoom = mediumZoom(images, { margin: 24, background: "var(--theme-bg)" });
+
+		// Jumping to a section should also put the TOC away
+		const tocPanel = document.getElementById("toc-panel");
+		tocPanel?.addEventListener("click", (e) => {
+			if ((e.target as Element).closest("a")) tocPanel.hidePopover();
+		});
 	});
 </script>
